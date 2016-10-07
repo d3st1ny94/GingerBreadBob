@@ -214,10 +214,6 @@ bool GraphicsClass::Frame(float deltatime, std::vector<std::vector<int>>& toDraw
 	return true;
 }
 
-#include <cmath>
-
-static float rad = 3.14 / 2.0f;
-int lastScore = 0;
 bool GraphicsClass::Render(float deltatime, std::vector<std::vector<int>>& toDraw, int score, bool gameover)
 {
 	D3DXMATRIX worldMatrix, viewMatrix, projectionMatrix, orthoMatrix, rotationZ;
@@ -237,6 +233,7 @@ bool GraphicsClass::Render(float deltatime, std::vector<std::vector<int>>& toDra
 	m_D3D->GetProjectionMatrix(projectionMatrix);
 	m_D3D->GetOrthoMatrix(orthoMatrix);
 	D3DXMATRIX S;
+	//scale for background
 	D3DXMatrixScaling(&S, m_GridBitmap->GetMaxWidth(), m_GridBitmap->GetMaxHeight(), 0);
 	if (!gameover)
 	{
@@ -253,15 +250,7 @@ bool GraphicsClass::Render(float deltatime, std::vector<std::vector<int>>& toDra
 		{
 			return false;
 		}
-		//Transform World Matrix with a rotation matrix
-		/*const float piOverTwo = 3.14f / 2.0f;
-		if (rad < 3.1 * 2.0f){
-			rad += (piOverTwo * deltatime);
-		}
-		else{
-			rad += fmod((piOverTwo * deltatime), (3.14f * 2.0f));
-		}
-		D3DXMatrixRotationZ(&R, rad);*/
+		//scale for pieces
 		D3DXMatrixScaling(&S, 128, 128, 0);
 
 		worldMatrix = S;

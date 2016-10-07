@@ -55,9 +55,12 @@ c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(608): w
           c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50445) : see previous definition of 'D3D10_ERROR_TOO_MANY_UNIQUE_STATE_OBJECTS'
 c:\program files (x86)\microsoft directx sdk (june 2010)\include\d3d10.h(609): warning C4005: 'D3D10_ERROR_FILE_NOT_FOUND' : macro redefinition
           c:\program files (x86)\windows kits\8.1\include\shared\winerror.h(50454) : see previous definition of 'D3D10_ERROR_FILE_NOT_FOUND'
-c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(219): warning C4305: 'initializing' : truncation from 'double' to 'float'
-c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(240): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
-c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(269): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(279): warning C4018: '<' : signed/unsigned mismatch
-c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(280): warning C4018: '<' : signed/unsigned mismatch
+c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(237): warning C4244: 'argument' : conversion from 'int' to 'FLOAT', possible loss of data
+c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(258): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
+c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(268): warning C4018: '<' : signed/unsigned mismatch
+c:\users\adand\documents\github\gingerbreadbob\engine\engine\graphicsclass.cpp(269): warning C4018: '<' : signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  systemclass.cpp
+  main.cpp
   Engine.vcxproj -> C:\Users\adand\Documents\GitHub\GingerBreadBob\Engine\Debug\Engine.exe
