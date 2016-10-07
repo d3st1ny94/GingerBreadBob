@@ -39,10 +39,10 @@ public:
 
 	bool Initialize(int, int, HWND);
 	void Shutdown();
-	bool Frame(float deltatime, std::vector<std::vector<int>>& toDraw, int score);
+	bool Frame(float deltatime, std::vector<std::vector<int>>& toDraw, int score, bool gameover);
 
 private:
-	bool Render(float deltatime, std::vector<std::vector<int>>& toDraw, int score);
+	bool Render(float deltatime, std::vector<std::vector<int>>& toDraw, int score, bool gameover);
 
 private:
 	D3DClass* m_D3D;
@@ -51,6 +51,7 @@ private:
 	GridBitmapClass* m_GridBitmap;
 	SimpleTextureShader* m_SimpleTexShader;
 	BitmapClass* m_simpleBitmap;
+	BitmapClass* m_GameOver;
 	TextClass* m_Text;
 	float CurrTileY = 100;
 	float CurrTileX = 100;

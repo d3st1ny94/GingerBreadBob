@@ -6,7 +6,7 @@ Game::Game(Board *pBoard, Pieces *pPieces)
 	// Get the pointer to the Board and Pieces classes
 	mBoard = pBoard;
 	mPieces = pPieces;
-
+	mTimeSinceInput = 0;
 	// Game initialization
 	InitGame();
 }
@@ -18,6 +18,7 @@ int Game::GetRand(int pA, int pB)
 
 void Game::InitGame()
 {
+	mPaused = false;
 	// Init random numbers
 	srand((unsigned int)time(NULL));
 
@@ -69,58 +70,99 @@ std::vector<std::vector<int>> Game::GetBoard(){
 	}
 	return ret;
 }
+bool Game::isPaused()
+{
+	return mPaused;
+}
 void Game::HandleInput(int action, float deltaTime){
 	mTimeSinceInput -= deltaTime * 1000;
 	if (mTimeSinceInput <= 0)
 	{
 		mTimeSinceInput = 100;
 		switch (action){
+			
 			case 0: //right
 			{
-				if (mBoard->isPossibleMovement(mPosX + 1, mPosY, mPiece, mRotation))
-					mPosX++;
+				if(!mPaused)
+				{
+					if (mBoard->isPossibleMovement(mPosX + 1, mPosY, mPiece, mRotation))
+						mPosX++;
+					break;
+				}
 				break;
 			}
 
 			case 1: // left
 			{
-				if (mBoard->isPossibleMovement(mPosX - 1, mPosY, mPiece, mRotation))
-					mPosX--;
+				if(!mPaused)
+				{
+					if (mBoard->isPossibleMovement(mPosX - 1, mPosY, mPiece, mRotation))
+						mPosX--;
+					break;
+				}
 				break;
 			}
 
 			case 2: // up (rotate)
 			{
-				if (mBoard->isPossibleMovement(mPosX, mPosY, mPiece, (mRotation + 1) % 4))
-					mRotation = (mRotation + 1) % 4;
+				if(!mPaused)
+				{
+					if (mBoard->isPossibleMovement(mPosX, mPosY, mPiece, (mRotation + 1) % 4))
+						mRotation = (mRotation + 1) % 4;
 
+					break;
+				}
 				break;
 			}
 			case 3: // down (instant put)
 			{
-				// Check collision from up to down
-				while (mBoard->isPossibleMovement(mPosX, mPosY, mPiece, mRotation)) { mPosY++; }
-
-				mBoard->StorePiece(mPosX, mPosY - 1, mPiece, mRotation);
-				//check for lines
-				mBoard->DeletePossibleLines();
-
-				if (mBoard->isGameOver())
+				if (!mPaused)
 				{
-					//won tally up the game
-					InitGame();
+					// Check collision from up to down
+					while (mBoard->isPossibleMovement(mPosX, mPosY, mPiece, mRotation)) { mPosY++; }
+
+					mBoard->StorePiece(mPosX, mPosY - 1, mPiece, mRotation);
+					//check for lines
+					mBoard->DeletePossibleLines();
+
+					if (mBoard->isGameOver())
+					{
+						//won tally up the game
+						mPaused = true;
+					}
+
+					CreateNewPiece();
+
+					break;
 				}
-
-				CreateNewPiece();
-
+				break;
+			}
+			
+			case 4:
+			{
+				if(isGameOver() == false)
+				{
+					mPaused = !mPaused;
+				}
+				break;
+			}
+			case 5:
+			{
+				if(isGameOver())
+				{
+					InitGame();// reset the game
+				}
 				break;
 			}
 		}
 	}
 }
 void Game::Update(float deltatime){
-	mTime += deltatime*1000;
-	if (mTime > WAIT_TIME){
+	if (!mPaused)
+	{
+		mTime += deltatime * 1000;
+	}
+	if (mTime > WAIT_TIME && !mPaused){
 		mTime = 0; 
 		if (mBoard->isPossibleMovement(mPosX, mPosY + 1, mPiece, mRotation))
 		{
@@ -136,8 +178,7 @@ void Game::Update(float deltatime){
 
 			if (mBoard->isGameOver())
 			{
-				//won tally up the game
-				InitGame();
+				mPaused = true; // game over no more moves
 			}
 
 			CreateNewPiece();
@@ -147,4 +188,8 @@ void Game::Update(float deltatime){
 }
 int Game::GetScore(){
 	return mBoard->GetScore();
+}
+bool Game::isGameOver()
+{
+	return mBoard->isGameOver();
 }

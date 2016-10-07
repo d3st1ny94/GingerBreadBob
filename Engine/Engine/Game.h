@@ -16,11 +16,14 @@ public:
 	void HandleInput(int action, float deltatime);
 	void Update(float deltatime);
 	int GetScore();
+	bool isPaused();
+	bool isGameOver();
 private:
 
 	int mNextPosX, mNextPosY;       // Position of the next piece
 	int mNextPiece, mNextRotation;  // Kind and rotation of the next piece
-
+	bool mPaused = false;
+	bool mGameOver = false;
 	Board *mBoard;
 	Pieces *mPieces;
 

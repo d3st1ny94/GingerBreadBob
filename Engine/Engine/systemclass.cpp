@@ -155,21 +155,17 @@ bool SystemClass::Frame(float deltatime)
 	}
 	if (m_Input->IsKeyDown(VK_TAB))
 	{
-		m_Paused = !m_Paused;
-		if (m_Paused)
-		{
-			mTimer.Stop();
-		}
-		else
-		{
-			mTimer.Start();
-		}
+		m_Game.HandleInput(4, deltatime); // 4
+	}
+	if (m_Input->IsKeyDown(VK_SPACE))
+	{
+		m_Game.HandleInput(5, deltatime); // 4
 	}
 	//	Update State of the game weather input was given or not
 	m_Game.Update(deltatime);
 
 	// Do the frame processing for the graphics object.
-	result = m_Graphics->Frame(deltatime, m_Game.GetBoard(), m_Game.GetScore());
+	result = m_Graphics->Frame(deltatime, m_Game.GetBoard(), m_Game.GetScore(), m_Game.isGameOver());
 	if(!result)
 	{
 		return false;
